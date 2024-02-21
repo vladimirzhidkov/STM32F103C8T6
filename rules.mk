@@ -39,7 +39,7 @@ CSTD ?= -std=c99
 # If you're insane, V=99 will print out all sorts of things.
 V?=0
 ifeq ($(V),0)
-#Q	:= @
+Q	:= @
 NULL	:= 2>/dev/null
 endif
 
@@ -171,7 +171,9 @@ endif
 
 clean:
 	rm -rf $(BUILD_DIR) $(GENERATED_BINS)
-
+# my changes	
+	rm -rf $(subst ../,,$(RTOS))
+# end my changes
 .PHONY: all clean flash
 -include $(OBJS:.o=.d)
 

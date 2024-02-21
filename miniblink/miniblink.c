@@ -16,6 +16,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/gpio.h>
 
@@ -39,11 +40,11 @@ main(void)
 
 	for (;;) {
 		gpio_clear(GPIOC,GPIO13);	/* LED on */
-		for (i = 0; i < 1500000; i++)	/* Wait a bit. */
+		for (i = 0; i < 100000; i++)	/* Wait a bit. */
 			__asm__("nop");
 
 		gpio_set(GPIOC,GPIO13);		/* LED off */
-		for (i = 0; i < 500000; i++)	/* Wait a bit. */
+		for (i = 0; i < 100000; i++)	/* Wait a bit. */
 			__asm__("nop");
 	}
 

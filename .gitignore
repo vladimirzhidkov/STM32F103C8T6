@@ -1,4 +1,6 @@
+FreeRTOSv202212.01/
 bin/
 *.elf
 *.bin
+*.d
 generated.*.ld

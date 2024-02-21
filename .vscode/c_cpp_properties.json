@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/FreeRTOSv202212.01/FreeRTOS/Source/portable/GCC/ARM_CM3"
+            ],
+            "intelliSenseMode": "gcc-arm",
+            "compilerPath": "/Applications/ARM/bin/arm-none-eabi-gcc",
+            "cStandard": "c99",
+            "defines": [
+                "STM32F1"
+            ]
+        }
+    ],
+    "version": 4
+}
