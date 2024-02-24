@@ -1,8 +1,9 @@
 PROJECT = miniblink
 BUILD_DIR = bin
+SOURCE_DIR = src
 
 #SHARED_DIR = ../my-common-code
-CFILES = miniblink.c
+CFILES := $(addprefix $(SOURCE_DIR)/, main.c)
 #CFILES += api.c
 #AFILES += api-asm.S
 

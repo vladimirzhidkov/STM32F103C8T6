@@ -57,6 +57,9 @@
 #define configIDLE_SHOULD_YIELD		1
 #define configUSE_MUTEXES			1
 
+/* changes by @vz added it so the compiler does not complain about it not defined */
+#define configUSE_MALLOC_FAILED_HOOK 0
+// end of changes by @vz
 
 /* Set the following definitions to 1 to include the API function, or zero
 to exclude the API function. */

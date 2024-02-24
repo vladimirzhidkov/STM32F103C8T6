@@ -1,41 +1,37 @@
+# the full device name for generating ld script
+DEVICE = stm32f103c8t6
+CPUCORE = ARM_CM3
+
 PROJECT = blinky
-BUILD_DIR = bin
 
-SHARED_DIR = #../my-common-code
-CFILES = main.c opencm3.c
-#CFILES += api.c
-#AFILES += api-asm.S
+SOURCE_DIR		= src
+BUILD_DIR		= bin
+OPENCM3_DIR		= ../libopencm3
+RTOS_DIR		= ../FreeRTOSv202212.01
+# relative to RTOS_DIR:
+RTOS_KERNEL_DIR	= FreeRTOS/Source
+RTOS_PORT_DIR	= $(RTOS_KERNEL_DIR)/portable/GCC/$(CPUCORE)
 
-# my adds - start
-#RTOS_SOURCE_DIR = rtos
-#RTOS_SOURCE += heap_4.c list.c port.c tasks.c opencm3.c 
-RTOS = ../FreeRTOSv202212.01
-RTOS_SOURCE_DIR = $(RTOS)/FreeRTOS/Source
-RTOS_PORT_DIR = $(RTOS_SOURCE_DIR)/portable/GCC/ARM_CM3
-RTOS_MEM_MANG_DIR = $(RTOS_SOURCE_DIR)/portable/MemMang
+CFILES := $(addprefix $(SOURCE_DIR)/, main.c opencm3.c)
+CFILES += $(addprefix $(RTOS_KERNEL_DIR)/,list.c tasks.c)
 
-CFILES += $(addprefix $(RTOS_SOURCE_DIR)/,list.c tasks.c queue.c)
-CFILES += $(addprefix $(RTOS_MEM_MANG_DIR)/,heap_4.c)
+# memory allocation scheme:
+CFILES += $(RTOS_KERNEL_DIR)/portable/MemMang/heap_4.c
 CFILES += $(RTOS_PORT_DIR)/port.c
 
-INCLUDES += -I$(RTOS_SOURCE_DIR)/include
-INCLUDES += -I$(RTOS_PORT_DIR)
-INCLUDES += -I.
+INCLUDES := -I$(SOURCE_DIR)/include
+INCLUDES += -I$(RTOS_DIR)/$(RTOS_KERNEL_DIR)/include
+INCLUDES += -I$(RTOS_DIR)/$(RTOS_PORT_DIR)
 
-#$(info cfiles: $(CFILES))
-#$(info includes: $(INCLUDES))
+# verbosity control variable (used in ../rules.mk)
+# Be silent per default, but 'make V=1' will show all compiler calls.
+# If you're insane, V=99 will print out all sorts of things.
+V = 0
 
-V = 1	# verbosity control variable (used in ../rules.mk)
-# my adds - end 
-
-# TODO - you will need to edit these two lines!
-DEVICE=stm32f103c8t6
-OOCD_FILE = #board/stm32f4discovery.cfg
+#OOCD_FILE = board/stm32f4discovery.cfg
 
 # You shouldn't have to edit anything below here.
-VPATH += $(SHARED_DIR)
-INCLUDES += $(patsubst %,-I%, . $(SHARED_DIR))
-OPENCM3_DIR=../libopencm3
+#VPATH += $(SHARED_DIR)
 
 include $(OPENCM3_DIR)/mk/genlink-config.mk
 include ../rules.mk

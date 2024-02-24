@@ -50,6 +50,7 @@ CXX	= $(PREFIX)g++
 LD	= $(PREFIX)gcc
 OBJCOPY	= $(PREFIX)objcopy
 OBJDUMP	= $(PREFIX)objdump
+SIZE = $(PREFIX)size
 OOCD	?= openocd
 
 OPENCM3_INC = $(OPENCM3_DIR)/include
@@ -111,7 +112,12 @@ LDLIBS += -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 %: SCCS/s.%
 
 all: $(PROJECT).elf $(PROJECT).bin
-flash: $(PROJECT).flash
+
+# changes by @vz
+flash: $(PROJECT).bin 
+	st-flash write $(PROJECT).bin 0x8000000
+#flash: $(PROJECT).flash
+# end of changes by @vz
 
 # error if not using linker script generator
 ifeq (,$(DEVICE))
@@ -123,6 +129,13 @@ else
 # if linker script generator was used, make sure it's cleaned.
 GENERATED_BINS += $(LDSCRIPT)
 endif
+
+# changes by @vz
+$(BUILD_DIR)/%.o: $(RTOS_DIR)/%.c
+	@printf "  CC\t$<\n"
+	@mkdir -p $(dir $@)
+	$(Q)$(CC) $(TGT_CFLAGS) $(CFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $<
+# end of changes by @vz
 
 # Need a special rule to have a bin dir
 $(BUILD_DIR)/%.o: %.c
@@ -143,6 +156,7 @@ $(BUILD_DIR)/%.o: %.S
 $(PROJECT).elf: $(OBJS) $(LDSCRIPT) $(LIBDEPS)
 	@printf "  LD\t$@\n"
 	$(Q)$(LD) $(TGT_LDFLAGS) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
+	$(Q)$(SIZE) $@
 
 %.bin: %.elf
 	@printf "  OBJCOPY\t$@\n"
@@ -171,9 +185,6 @@ endif
 
 clean:
 	rm -rf $(BUILD_DIR) $(GENERATED_BINS)
-# my changes	
-	rm -rf $(subst ../,,$(RTOS))
-# end my changes
+
 .PHONY: all clean flash
 -include $(OBJS:.o=.d)
-
