@@ -28,8 +28,7 @@ static void task1(void *args __attribute((unused))) {
 int main(void) {
 	// rcc_clock_setup_in_hsi_out_24mhz() is deprecated
 	// use this one instead
-	rcc_clock_setup_pll(&rcc_hsi_configs[RCC_CLOCK_HSI_24MHZ]);
-
+	// rcc_clock_setup_pll(&rcc_hsi_configs[RCC_CLOCK_HSI_24MHZ]);
 	rcc_periph_clock_enable(RCC_GPIOC);
 	gpio_set_mode(
 		GPIOC,
