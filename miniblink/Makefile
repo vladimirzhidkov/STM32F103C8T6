@@ -8,7 +8,12 @@ CFILES := $(addprefix $(SOURCE_DIR)/, main.c)
 #AFILES += api-asm.S
 
 # TODO - you will need to edit these two lines!
+
 DEVICE=stm32f103c8t6
+start: all
+send: $(PROJECT).bin 
+	st-flash write $(PROJECT).bin 0x08000000
+
 #OOCD_FILE = board/stm32f4discovery.cfg
 
 # You shouldn't have to edit anything below here.

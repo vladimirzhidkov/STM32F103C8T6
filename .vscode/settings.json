@@ -8,7 +8,9 @@
 		"task.h": "c",
 		"freertos.h": "c",
 		"nvic.h": "c",
-		"portmacro.h": "c"
+		"portmacro.h": "c",
+		"vector.h": "c",
+		"freertosconfig.h": "c"
 	},
-	"editor.tabSize": 4,
+	"editor.tabSize": 6,
 }
