@@ -1,0 +1,26 @@
+{
+	"configurations": [
+		{
+			"type": "cortex-debug",
+			"name": "Debug miniblink with ST-Util",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+
+			"executable": "./bare-metal-projects/miniblink/miniblink.elf",
+			"runToEntryPoint": "main",
+			"showDevDebugOutput": "none",
+			"servertype": "stutil"
+		},
+		{
+			"type": "cortex-debug",
+			"name": "Debug blinky with ST-Util",
+			"request": "launch",
+			"cwd": "${workspaceFolder}",
+
+			"executable": "./freeRTOS-projects/blinky/blinky.elf",
+			"runToEntryPoint": "main",
+			"showDevDebugOutput": "none",
+			"servertype": "stutil"
+		},
+	]
+}

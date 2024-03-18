@@ -3,6 +3,7 @@
  * To use libopencm3 with FreeRTOS on Cortex-M3 platform, we must
  * define three interlude routines.
  */
+#include "../include/FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include <libopencm3/stm32/rcc.h>

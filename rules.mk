@@ -111,7 +111,7 @@ LDLIBS += -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 %: SCCS/s.%
 
 all: $(PROJECT).elf $(PROJECT).bin
-flash: $(PROJECT).flash
+# commented out by @vz flash: $(PROJECT).flash
 
 # error if not using linker script generator
 ifeq (,$(DEVICE))

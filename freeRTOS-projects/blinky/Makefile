@@ -1,22 +1,21 @@
-# the full device name for generating ld script
 DEVICE = stm32f103c8t6
 CPUCORE = ARM_CM3
-
 PROJECT = blinky
 
 SOURCE_DIR		= src
 BUILD_DIR		= bin
-OPENCM3_DIR		= ../libopencm3
-RTOS_DIR		= ../FreeRTOSv202212.01
+OPENCM3_DIR		= ../../libopencm3
+RTOS_DIR		= ../../FreeRTOSv202212.01
 
 # relative to RTOS_DIR:
 RTOS_KERNEL_DIR	= FreeRTOS/Source
 RTOS_PORT_DIR	= $(RTOS_KERNEL_DIR)/portable/GCC/$(CPUCORE)
 
+# my source files
 CFILES := $(addprefix $(SOURCE_DIR)/, main.c opencm3.c)
-CFILES += $(addprefix $(RTOS_KERNEL_DIR)/,list.c tasks.c)
 
-# memory allocation scheme:
+# FreeRTOS source files
+CFILES += $(addprefix $(RTOS_KERNEL_DIR)/,list.c tasks.c)
 CFILES += $(RTOS_KERNEL_DIR)/portable/MemMang/heap_4.c
 CFILES += $(RTOS_PORT_DIR)/port.c
 
@@ -33,8 +32,8 @@ $(BUILD_DIR)/%.o: $(RTOS_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(Q)$(CC) $(TGT_CFLAGS) $(CFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $@ -c $<
 
-send: $(PROJECT).bin 
-	st-flash write $(PROJECT).bin 0x08000000
+flash: $(PROJECT).bin 
+	st-flash write $< 0x08000000
 
 #OOCD_FILE = board/stm32f4discovery.cfg
 
@@ -42,5 +41,5 @@ send: $(PROJECT).bin
 #VPATH += $(SHARED_DIR)
 
 include $(OPENCM3_DIR)/mk/genlink-config.mk
-include ../rules.mk
+include ../../rules.mk
 include $(OPENCM3_DIR)/mk/genlink-rules.mk

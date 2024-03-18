@@ -2,6 +2,7 @@
  *
  * The LED on PC13 is toggled in task1.
  */
+#include "../include/FreeRTOSConfig.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include <libopencm3/stm32/rcc.h>
@@ -20,8 +21,9 @@ void vApplicationStackOverflowHook(
 
 static void task1(void *args __attribute((unused))) {
 	for (;;) {
-		gpio_toggle(GPIOC,GPIO13);
-		vTaskDelay(pdMS_TO_TICKS(500));
+		gpio_toggle(GPIOC, GPIO13);
+		TickType_t count = pdMS_TO_TICKS(500);
+		vTaskDelay(count);
 	}
 }
 
@@ -35,7 +37,7 @@ int main(void) {
 		GPIO_MODE_OUTPUT_2_MHZ,
 		GPIO_CNF_OUTPUT_PUSHPULL,
 		GPIO13);
-	xTaskCreate(task1,"LED",100,NULL,configMAX_PRIORITIES-1,NULL);
+	xTaskCreate(task1, "LED", 100, NULL, configMAX_PRIORITIES-1, NULL);
 	vTaskStartScheduler();
 
 	for (;;);
