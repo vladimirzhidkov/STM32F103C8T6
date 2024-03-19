@@ -1,12 +1,12 @@
 # STM32F103
 
-git submodule add https://github.com/libopencm3/libopencm3.git
-
-make -C libopencm3  
-
-copy FreeRTOS to root from https://github.com/FreeRTOS/FreeRTOS/releases/download/202212.01/FreeRTOSv202212.01.zip
+Pull and build libopencm3:
+git submodule update --init && make -C libopencm3  
 
 
-Install openOCD (brew install open-ocd)
+Copy FreeRTOS to root:
+curl -L https://github.com/FreeRTOS/FreeRTOS/releases/download/202212.01/FreeRTOSv202212.01.zip -o FreeRTOSv202212.01.zip && unzip FreeRTOSv202212.01.zip && rm FreeRTOSv202212.01.zip
 
-Install stlink toolchain (brew install stlink)
+
+Install gdb server:
+brew install stlink

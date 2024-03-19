@@ -4,8 +4,8 @@ PROJECT = blinky
 
 SOURCE_DIR		= src
 BUILD_DIR		= bin
-OPENCM3_DIR		= ../../libopencm3
-RTOS_DIR		= ../../FreeRTOSv202212.01
+OPENCM3_DIR		= ../libopencm3
+RTOS_DIR		= ../FreeRTOSv202212.01
 
 # relative to RTOS_DIR:
 RTOS_KERNEL_DIR	= FreeRTOS/Source
@@ -41,5 +41,5 @@ flash: $(PROJECT).bin
 #VPATH += $(SHARED_DIR)
 
 include $(OPENCM3_DIR)/mk/genlink-config.mk
-include ../../rules.mk
+include ../rules.mk
 include $(OPENCM3_DIR)/mk/genlink-rules.mk
